@@ -1,0 +1,49 @@
+server:
+  servlet.context-path: /basic
+  port: 6000
+
+spring:
+  application:
+    name: basic
+
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://127.0.0.1:3306/imall?autoReconnect=true&autoReconnectForPools=true&useUnicode=true&characterEncoding=utf8
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+    # 初始化大小，最小，最大
+    initialSize: 1
+    minIdle: 3
+    maxActive: 20
+    # 配置获取连接等待超时的时间
+    maxWait: 60000
+    # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+    timeBetweenEvictionRunsMillis: 60000
+    # 配置一个连接在池中最小生存的时间，单位是毫秒
+    minEvictableIdleTimeMillis: 30000
+
+#Dubbo前不能使用Spring
+dubbo:
+  application:
+    name: I-basic
+  registry:
+    address: zookeeper://127.0.0.1
+    port: 2181
+  protocol:
+    name: dubbo
+    port: 20880
+  scan: com.szy.basic.web.remote.impl
+
+
+mybatis:
+  mapper-locations:  mapper/*.xml
+  type-aliases-package: com.szy.basic.dal.entity
+
+logging:
+  pattern:
+    console: "%d - %msg%n"
+  file: e:/basic.log
+    #level:
+    #这里可以是包名也可以是类名
+  #com.lonely: debug
